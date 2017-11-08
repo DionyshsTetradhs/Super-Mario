@@ -129,9 +129,10 @@ body {
 		}
 
 		function coinOverlap(player, coin) {
-			coin.kill();
-			var audio = new Audio('assets/audio/coin.wav');
+			var audio = new Audio('assets/audio/Coin_Sound.mp3');
            		audio.play()
+			coin.kill();
+			
 		}
 
 		function goombaOverlap(player, goomba) {
