@@ -15,7 +15,7 @@ body {
 <body>
 	
 	<audio autoplay loop>
-        	<source src="assets/audio/SuperMarioTheme.mp3" type="audio/mp3">
+        	<source src="assets/audio/SuperMarioTheme.wav" type="audio/wav">
 	</audio>
 	
 	<script type="text/javascript">
@@ -130,6 +130,8 @@ body {
 
 		function coinOverlap(player, coin) {
 			coin.kill();
+		var audio = new Audio('assets/audio/coin.wav');
+           	audio.play()
 		}
 
 		function goombaOverlap(player, goomba) {
