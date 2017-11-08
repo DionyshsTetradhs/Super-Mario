@@ -16,7 +16,7 @@ body {
 	
 	<audio autoplay loop>
         	<source src="assets/audio/SuperMarioTheme.mp3" type="audio/mp3">
-	
+	</audio>
 	
 	<script type="text/javascript">
 		var game = new Phaser.Game(256, 240, Phaser.CANVAS, '', {
@@ -129,6 +129,8 @@ body {
 		}
 
 		function coinOverlap(player, coin) {
+			var audio = new Audio('assets/audio/Coin_Sound.mp3');
+                	audio.play()
 			coin.kill();
 			
 		}
