@@ -14,10 +14,6 @@ body {
 </head>
 <body>
 	
-	<audio autoplay loop>
-        	<source src="assets/audio/SuperMarioTheme.mp3" type="audio/mp3">
-	</audio>
-	
 	<script type="text/javascript">
 		var game = new Phaser.Game(256, 240, Phaser.CANVAS, '', {
 			preload : preload,
@@ -40,9 +36,15 @@ body {
 
 			this.load.tilemap('level', 'assets/super_mario_map.json', null,
 					Phaser.Tilemap.TILED_JSON);
+			game.load.audio('SuperMarioTheme', 'audio/SuperMarioTheme.mp3');
+            		game.load.audio('coin', 'audio/coin.wav');
+            		game.load.audio('jump', 'audio/jump.wav');
+            		game.load.audio('stomp', 'audio/stomp.wav');
 		}
 
 		function create() {
+			backgroundMusic = game.add.audio('SuperMarioTheme');
+            		backgroundMusic.loopFull();
 			Phaser.Canvas.setImageRenderingCrisp(game.canvas)
 			game.scale.pageAlignHorizontally = true;
 			game.scale.pageAlignVertically = true
@@ -117,6 +119,8 @@ body {
 				if (cursors.up.isDown && player.body.onFloor()) {
 					player.body.velocity.y = -190;
 					player.animations.stop();
+					jump = game.add.audio('jump');
+                    			jump.play();
 				}
 
 				if (player.body.velocity.y != 0) {
@@ -129,8 +133,8 @@ body {
 		}
 
 		function coinOverlap(player, coin) {
-			var audio = new Audio("assets/audio/Coin_Sound.mp3");
-                	audio.play()
+			coinSound = game.add.audio('coin');
+			 coinSound.play();
 			coin.kill();
 			
 		}
@@ -143,6 +147,8 @@ body {
 				player.body.velocity.y = -80;
 				game.time.events.add(Phaser.Timer.SECOND, function() {
 					goomba.kill();
+					stompsound = game.add.audio('stomp');
+					 stompsound.play();
 				});
 			} else {
 				player.frame = 6;
