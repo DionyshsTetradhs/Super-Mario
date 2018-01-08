@@ -22,8 +22,10 @@ body {
 		}, false, false);
 
 		var scoreCounter = 0;
+		var scoreCounterTxt;
 		var currentTime = 0;
 		var lives = 3; 	
+		var livesTxt;
 		var isDead = false;
 	        
 		
@@ -97,7 +99,7 @@ body {
 
 			cursors = game.input.keyboard.createCursorKeys();
 			scoreCounterTxt = game.add.text(30, 0,'Score: 0', {font: '20px 	Lucida Console',  fill: 'green'});
-            		livesTxt = game.add.text(330,0,'Life: 4', {font: '20px 	Lucida Console',  fill: 'red'});
+            		livesTxt = game.add.text(330,0,'Lives: 3', {font: '20px 	Lucida Console',  fill: 'red'});
 		}
 
 		function update() {
