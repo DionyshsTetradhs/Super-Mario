@@ -146,8 +146,7 @@ body {
 			coinSound = game.add.audio('coin');
 			coinSound.play();
 			scoreCounter+=5;
-			textScore.text = "SCORE : " + scoreCounter;
-			textLives.text = "LIVES : " + lives;
+			scoreCounterTxt.text = 'Score : ' + scoreCounter;
 			coin.kill();
 			
 		}
@@ -155,7 +154,7 @@ body {
 		function goombaOverlap(player, goomba) {
 			if (player.body.touching.down) {
 				scoreCounter += 50;
-				textScore.text = "SCORE : " + scoreCounter ;
+				scoreCounterTxt.text = 'Score : ' + scoreCounter;
 				goomba.animations.stop();
 				goomba.frame = 2;
 				goomba.body.enable = false;
@@ -169,8 +168,7 @@ body {
 			else {
 				isDead = true;						    
 				
-				if (lives === 0) {
-					textLives.text = "LIVES x NONE";					
+				if (lives === 0) {					
 					player_death();
 				
 			}
@@ -186,12 +184,7 @@ body {
 			}
 		}
 	}
-	function print_status_to_screen(){
-			textScore = game.add.text(10,10,"SCORE : " + scoreCounter, scoreStyle);
-			textScore.fixedToCamera=true;
-			
-			textLives = game.add.text(23,27," x " + lives, livesStyle);
-			textLives.fixedToCamera = true;
+	
 			
 	}
 	function player_death(){
