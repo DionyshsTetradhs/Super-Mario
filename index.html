@@ -25,8 +25,7 @@ body {
 		var currentTime = 0;
 		var lives = 3; 	
 		var isDead = false;
-	        var scoreStyle = {font : "bold 10pt Arial",fill: "#000", boundsAlignH: "center", boundsAlignV: "middle"};
-		var livesStyle = {font : "bold 10pt Arial",fill :"#000" , boundsAlignH: "center", boundsAlignV: "middle"};
+	        
 		
 		function preload() {
 
@@ -97,6 +96,8 @@ body {
 			game.camera.follow(player);
 
 			cursors = game.input.keyboard.createCursorKeys();
+			scoreCounterTxt = game.add.text(30, 0,'Score: 0', {font: '20px 	Lucida Console',  fill: 'green'});
+            		livesTxt = game.add.text(330,0,'Life: 4', {font: '20px 	Lucida Console',  fill: 'red'});
 		}
 
 		function update() {
