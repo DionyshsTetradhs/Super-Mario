@@ -21,6 +21,13 @@ body {
 			update : update
 		}, false, false);
 
+		var scoreCounter = 0;
+		var currentTime = 0;
+		var lives = 3; 	
+		var isDead = false;
+	        var scoreStyle = {font : "bold 10pt Arial",fill: "#000", boundsAlignH: "center", boundsAlignV: "middle"};
+		var livesStyle = {font : "bold 10pt Arial",fill :"#000" , boundsAlignH: "center", boundsAlignV: "middle"};
+		
 		function preload() {
 
 			//  We need this because the assets are on github pages
@@ -33,9 +40,8 @@ body {
 			this.load.spritesheet('goomba', 'assets/goomba.png', 16, 16);
 			this.load.spritesheet('mario', 'assets/mario.png', 16, 16);
 			this.load.spritesheet('coin', 'assets/coin.png', 16, 16);
-
 			this.load.tilemap('level', 'assets/super_mario_map.json', null,
-					Phaser.Tilemap.TILED_JSON);
+			Phaser.Tilemap.TILED_JSON);
 			game.load.audio('SuperMarioTheme', 'audio/SuperMarioTheme.mp3');
             		game.load.audio('coin', 'audio/coin.wav');
             		game.load.audio('jump', 'audio/jump.wav');
@@ -45,6 +51,7 @@ body {
 		function create() {
 			backgroundMusic = game.add.audio('SuperMarioTheme');
             		backgroundMusic.loopFull();
+			isDead = false;
 			Phaser.Canvas.setImageRenderingCrisp(game.canvas)
 			game.scale.pageAlignHorizontally = true;
 			game.scale.pageAlignVertically = true
@@ -134,13 +141,17 @@ body {
 
 		function coinOverlap(player, coin) {
 			coinSound = game.add.audio('coin');
-			 coinSound.play();
+			coinSound.play();
+			scoreCounter+=5;
+			textScore.text = "SCORE : " + scoreCounter ;
 			coin.kill();
 			
 		}
 
 		function goombaOverlap(player, goomba) {
 			if (player.body.touching.down) {
+				scoreCounter += 50;
+				textScore.text = "SCORE : " + scoreCounter ;
 				goomba.animations.stop();
 				goomba.frame = 2;
 				goomba.body.enable = false;
@@ -148,16 +159,53 @@ body {
 				game.time.events.add(Phaser.Timer.SECOND, function() {
 					goomba.kill();
 					stompsound = game.add.audio('stomp');
-					 stompsound.play();
+					stompsound.play();
 				});
-			} else {
+			} 
+			else {
+				isDead = true;						    
+				
+				if (lives === 0) {
+					textLives.text = "LIVES x NONE";					
+					player_death();
+				
+			}
+			else {
+				lives--;
 				player.frame = 6;
+				player.body.velocity.y = -190;
 				player.body.enable = false;
 				player.animations.stop();
-				game.time.events.add(Phaser.Timer.SECOND * 3, function() {
-					game.paused = true;
-				});
+				game.time.events.add(Phaser.Timer.SECOND , function() {	player.body.enable = false; });
+				scoreCounter = 0;
+				game.state.restart();
 			}
+		}
+	}
+	function print_status_to_screen(){
+			textScore = game.add.text(10,10,"SCORE : " + scoreCounter, scoreStyle);
+			textScore.fixedToCamera=true;
+			
+			textLives = game.add.text(23,27," x " + lives, livesStyle);
+			textLives.fixedToCamera = true;
+			
+	}
+	function player_death(){
+			player.frame = 6;
+			player.body.velocity.y = -190;
+			player.animations.stop();			
+			game.time.events.add(Phaser.Timer.SECOND , function() {	player.body.enable = false; });
+			//TEST
+			death = game.add.text(16, 30,'GAME OVER', { font: '12px', fill : '#000'});
+			death.x = game.camera.x + game.camera.width/2 - death.width/2;
+			death.y = game.camera.y + game.camera.height/2 - death.height/2;
+			res = game.add.text(16,30,'Press space to restart',{ fontSize: '8px',fill:'#000'});
+			res.x = game.camera.x + game.camera.width/2 - res.width/2;
+			res.y = death.y + 15;
+			var spaceb = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR); 
+			scoreCounter = 0;
+			lives = 3;
+			spaceb.onDown.add(function(){game.state.restart(); });			
 		}
 	</script>
 </body>
