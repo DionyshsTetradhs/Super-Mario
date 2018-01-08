@@ -95,8 +95,8 @@ body {
 			game.camera.follow(player);
 
 			cursors = game.input.keyboard.createCursorKeys();
-			scoreTxt = game.add.text(20, 0,'Score: 0', {font: '20px 	Lucida Console',  fill: 'green'});
-            		lifeTxt = game.add.text(130,0,'Life: 3', {font: '20px 	Lucida Console',  fill: 'red'});
+			scoreTxt = game.add.text(10, 0,'Score: 0', {font: '10px 	Lucida Console',  fill: 'green'});
+            		lifeTxt = game.add.text(130,0,'Life: 3', {font: '10px 	Lucida Console',  fill: 'red'});
 			scoreTxt.fixedToCamera=true;
 			lifeTxt.fixedToCamera=true;
 		}
@@ -143,14 +143,16 @@ body {
 
 		function coinOverlap(player, coin) {
 			coinSound = game.add.audio('coin');
-			 coinSound.play();
+			coinSound.play();
+			score += 5;
+            		scoreTxt.text = 'Score : ' + score;
 			coin.kill();
 			
 		}
 
 		function goombaOverlap(player, goomba) {
 			if (player.body.touching.down) {
-				score += 1;
+				score += 10;
             			scoreTxt.text = 'Score : ' + score;
 				goomba.animations.stop();
 				goomba.frame = 2;
